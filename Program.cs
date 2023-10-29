@@ -20,9 +20,10 @@ namespace ZeddPluginOffseter{
 
 
 		static long recurse_traverse(XmlNode search_node, long current_offset){
+			long beginning_offset = current_offset;
 			foreach (XmlNode child in search_node.ChildNodes){
 
-                XmlAttribute attr = xdoc.CreateAttribute("Offset");
+                XmlAttribute attr = xdoc.CreateAttribute("offset");
 				attr.Value = current_offset.ToString();
 				child.Attributes.Append(attr);
 
@@ -32,10 +33,18 @@ namespace ZeddPluginOffseter{
                 switch (child.Name){
 					case "_field_struct":
 					case "_field_array": // instead of having a count, there are 'Length' amount of children, thanks i guess
-                        current_offset += recurse_traverse(child, current_offset);
+                        long struct_size = recurse_traverse(child, current_offset);
+                        XmlAttribute struct_size_attr = xdoc.CreateAttribute("size");
+                        struct_size_attr.Value = struct_size.ToString();
+                        child.Attributes.Append(struct_size_attr);
+
+						current_offset += struct_size;
                         break;
 					case "_field_block_64":
-						recurse_traverse(child, 0);
+						long block_size = recurse_traverse(child, 0);
+                        XmlAttribute block_size_attr = xdoc.CreateAttribute("size");
+                        block_size_attr.Value = block_size.ToString();
+                        child.Attributes.Append(block_size_attr);
                         break;
 
 					case "_field_pad":
@@ -44,7 +53,7 @@ namespace ZeddPluginOffseter{
                         break;
             }
             }
-			return current_offset;
+			return current_offset - beginning_offset; // convert offset to size of struct
 		}
 
 
