@@ -37,7 +37,13 @@ namespace ZeddPluginOffseter{
 					case "_field_block_64":
 						recurse_traverse(child, 0);
                         break;
-            }}
+
+					case "_field_pad":
+                    case "_field_skip":
+                        current_offset += Convert.ToInt32(child.Attributes["length"].Value);
+                        break;
+            }
+            }
 			return current_offset;
 		}
 
@@ -100,8 +106,8 @@ namespace ZeddPluginOffseter{
 			{ "_field_custom_long_block_index", 4 },   
 			{ "unk3", 4 },   
 			{ "unk4", 4 },   
-			{ "_field_pad", 4 },   
-			{ "_field_skip", 4 },   
+			{ "_field_pad", 0 },   
+			{ "_field_skip", 0 },   
 			{ "_field_explanation", 0 },   
 			{ "_field_custom", 0 },   
 			{ "_field_struct", 0 },   
@@ -113,7 +119,7 @@ namespace ZeddPluginOffseter{
 			{ "_field_dword_integer", 4 },   
 			{ "_field_qword_integer", 8 },   
 			{ "_field_block_64", 28 },  
-			{ "_field_tag_reference_64", 28 }, 
+			{ "_field_tag_reference_64", 32 }, 
 			{ "_field_data_64", 28 },  
 			{ "_field_pageable_resource_64", 16 },  
 			{ "unk7", 4 },
