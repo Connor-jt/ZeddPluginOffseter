@@ -6,7 +6,7 @@ namespace ZeddPluginOffseter{
         static void Main(string[] args){
             Console.WriteLine("Hello, World!");
 
-			string source_path = "C:\\Users\\Joe bingle\\Downloads\\Halo5\\Halo5\\(sbsp)scenario_structure_bsp.xml";
+			string source_path = "C:\\Users\\Joe bingle\\Downloads\\Halo5\\(scnr)scenario.xml";
 
 
             xdoc = new();
@@ -98,10 +98,10 @@ namespace ZeddPluginOffseter{
 			{ "_field_real_argb_color", 16 },  
 			{ "_field_real_hsv_color", 4 },   
 			{ "_field_real_ahsv_color", 4 },   
-			{ "_field_short_bounds", 4 },   
+			{ "_field_short_integer_bounds", 4 },   
 			{ "_field_angle_bounds", 8 },   
 			{ "_field_real_bounds", 8 },   
-			{ "_field_real_fraction_bounds", 8 },   
+			{ "_field_fraction_bounds", 8 },
 			{ "unk1", 4 },   
 			{ "unk2", 4 },   
 			{ "_field_long_block_flags", 4 },   
